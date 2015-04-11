@@ -14,6 +14,7 @@ import dataingestion.services.model
 from datetime import datetime
 
 from dataingestion.services import user_config
+from dataingestion.services import api_client
 from dataingestion.ui.ingestui import DataIngestionUI
 
 APP_NAME = 'iDigBio Data Ingestion Tool'
@@ -184,6 +185,18 @@ def setup_log():
 	svc_log.addHandler(handler)
 
 
+def start_celery():
+  try:
+    # os.system("celeryd -l debug")
+    os.system("celery worker -l debug")
+  except:
+    logger.info("Unable to start Celery")
+    sys.exit()
+
+def kill_celery():
+  os.system("pkill celery")
+
+
 def main(argv):
 	global data_folder
 	global db_file
@@ -195,7 +208,7 @@ def main(argv):
 	server = HTTPServer()
 
 	# Init WebUI and Ingestion Manager
-	dataingestion.services.api_client.init(appliance_config.api_endpoint)
+	api_client.init(appliance_config.api_endpoint)
 	# dataingestion.services.ingestion_manager.init(appliance_config.worker_thread_count)
 	
 	#Mount WebUI and REST API
@@ -220,10 +233,13 @@ def main(argv):
 	'devmode_disable_startup_service_check', appliance_config.disable_startup_service_check)
 
 	server.start()
+	start_celery()
+	server.run()
 	atexit.register(
     _logout_user_if_configured, user_config_path)
-
-	server.run()
+	# atexit.register(server.stop)
+	atexit.register(kill_celery)
+	
 
 if __name__ == '__main__':
 	main(sys.argv)
