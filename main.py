@@ -16,6 +16,7 @@ from datetime import datetime
 from dataingestion.services import user_config
 from dataingestion.services import api_client
 from dataingestion.ui.ingestui import DataIngestionUI
+from dataingestion.services.service_rest import DataIngestionService
 
 APP_NAME = 'iDigBio Data Ingestion Tool'
 APP_AUTHOR = 'iDigBio'
@@ -124,7 +125,7 @@ class ArgParser():
 def setup_db(args):
 	global data_folder
 	global db_file
-	dataingestion.services.model.init(APP_AUTHOR)
+	# dataingestion.services.model.init(APP_AUTHOR)
 	if not exists(data_folder):
 		os.makedirs(data_folder)
 	db_file = join(data_folder, APP_AUTHOR + ".ingest.db")
@@ -188,7 +189,7 @@ def setup_log():
 def start_celery():
   try:
     # os.system("celeryd -l debug")
-    os.system("celery worker -l debug")
+    os.system("celery worker -l debug &")
   except:
     logger.info("Unable to start Celery")
     sys.exit()
@@ -213,7 +214,7 @@ def main(argv):
 	
 	#Mount WebUI and REST API
 	server.mount(DataIngestionUI(), '/', server.engine_conf_path)
-	# server.mount(DataIngestionService(), '/services', server.engine_conf_path)
+	server.mount(DataIngestionService(), '/services', server.engine_conf_path)
 
 	# Process command-line arguments:
 	parser = ArgParser()

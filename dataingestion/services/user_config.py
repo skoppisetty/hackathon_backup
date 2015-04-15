@@ -4,6 +4,32 @@ import ConfigParser
 #Fields in the configuration file.
 CONFIG_SECTION = 'iDigBio'
 DISABLE_CHECK = "devmode_disable_startup_service_check"
+IDIGBIOPROVIDEDBYGUID = 'accountuuid'
+
+CSV_PATH = 'CSVfilePath'
+RECORDSET_GUID = 'RecordSetGUID'
+RIGHTS_LICENSE = 'RightsLicense'
+MEDIACONTENT_KEYWORD = 'MediaContentKeyword'
+IDIGBIO_PROVIDER_GUID = 'iDigbioProviderGUID'
+IDIGBIO_PUBLISHER_GUID = 'iDigbioPublisherGUID'
+FUNDING_SOURCE = 'fundingSource'
+FUNDING_PURPOSE = 'fundingPurpose'
+
+G_IMAGE_DIR = 'g-imagedir'
+G_RECURSIVE = 'g-recursive'
+G_GUID_SYNTAX = 'g-guidsyntax'
+G_GUID_PREFIX = 'g-guidprefix'
+G_SAVE_PATH = 'g-save-path'
+G_DESCRIPTION = 'g-desc'
+G_LANGUAGE_CODE = 'g-lang'
+G_TITLE = 'g-title'
+G_DIGI_DEVICE = 'g-digdev'
+G_PIX_RESOLUTION = 'g-pixres'
+G_MAGNIFICATION = 'g-mag'
+G_OCR_OUTPUT = 'g-ocr-output'
+G_OCR_TECH = 'g-ocr-tech'
+G_INFO_WITHHELD = 'g-info-wh'
+G_COLLECTION_OBJ_GUID = 'g-col-obj-guid'
 
 config = None
 
